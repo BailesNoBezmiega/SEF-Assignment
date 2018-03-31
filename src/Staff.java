@@ -1,7 +1,6 @@
 public abstract class Staff
 // This will be the abstract class that all of the actors will extend from
 {
-    public abstract void login();
     private String name;
     private String userName;
     private String password;
@@ -9,6 +8,10 @@ public abstract class Staff
     private String phoneNumber;
     private String ID;
 
+    public void login()
+    {
+        // ** TO DO **
+    }
 
     public void setName(String name)
     {
