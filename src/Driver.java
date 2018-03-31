@@ -29,6 +29,13 @@ public class Driver
                 if(user.compareTo(loginComponents[0]) == 0 && pass.compareTo(loginComponents[1]) == 0)
                 {
                     System.out.println("You have successfully logged in as " + user + ", access level: " + loginComponents[2]);
+                    /*
+                    if loginComponents[2] == "admin"
+                        call adminMenu()
+                    else if loginComponents[2] = "CourseCoordinator"
+                        call CourseCoordinatorMenu()
+                    ETC
+                     */
                 }
 
             }
