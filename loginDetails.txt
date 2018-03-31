@@ -1,0 +1,7 @@
+******Login System******
+UserName:Password:AccessLevel
+
+Jason1195:admin123:Admin
+mightymouse42:helloworld:CourseCoordinator
+gatekeeper94:yesorno:Approval
+Jswagger:Sniper:Casual
