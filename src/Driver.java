@@ -11,7 +11,6 @@ public class Driver
     {
         File fileName = new File("loginDetails.txt");
         Scanner inputStream = null;
-        String readUser = "", readPass = "", readAccess = "";
 
         try
         {
