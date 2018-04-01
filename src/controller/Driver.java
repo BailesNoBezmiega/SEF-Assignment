@@ -33,7 +33,7 @@ public class Driver
                     /*
                     if loginComponents[2] == "admin"
                         call adminMenu()
-                    else if loginComponents[2] = "CourseCoordinator"
+                    else if loginComponents[2] = "model.CourseCoordinator"
                         call CourseCoordinatorMenu()
                     ETC
                      */
