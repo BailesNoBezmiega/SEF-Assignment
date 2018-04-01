@@ -1,3 +1,5 @@
+package controller;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -31,7 +33,7 @@ public class Driver
                     /*
                     if loginComponents[2] == "admin"
                         call adminMenu()
-                    else if loginComponents[2] = "CourseCoordinator"
+                    else if loginComponents[2] = "model.CourseCoordinator"
                         call CourseCoordinatorMenu()
                     ETC
                      */
@@ -53,28 +55,5 @@ public class Driver
         String inputPass = input.nextLine();
 
         login(inputUser, inputPass);
-    }
-    
-    public static void displayMenu(String userType) //prints menu after login(), menu differs based on userType
-    {
-    	if(userType == "CasualStaff")
-    	{
-    		System.out.println("1)\tViewassigned activities");
-    		System.out.println("2)\tSee offer and application");
-    	}
-    	else if(userType == "Approval")
-    	{
-    		System.out.println("1)\tView assignment requests");
-    	}
-    	else if(userType == "CourseCoordinator")
-    	{
-    		System.out.println("1)\tView assigned courses");
-    		System.out.println("2)\tRequest onboarding for new casual staff member then notify admin");
-    	}
-    	else if(userType == "Admin")
-    	{
-    		System.out.println("1)\tMaintain and update casual staff list");
-    		System.out.println("2)\tManage payroll");
-    	}
     }
 }
