@@ -7,7 +7,7 @@ import java.util.*;
 public class Driver
 {
     static Scanner input = new Scanner(System.in);
-
+    static boolean loggedIn = false;
 
     private static void login(String user, String pass)
     {
@@ -30,6 +30,8 @@ public class Driver
                 if(user.compareTo(loginComponents[0]) == 0 && pass.compareTo(loginComponents[1]) == 0)
                 {
                     System.out.println("You have successfully logged in as " + user + ", access level: " + loginComponents[2]);
+                    loggedIn = true;
+                    break;
                     /*
                     if loginComponents[2] == "admin"
                         call adminMenu()
@@ -40,6 +42,10 @@ public class Driver
                 }
 
             }
+            if(loggedIn == false)
+            {
+                System.out.println("Error: invalid username/password combination.");
+            }
         } catch (FileNotFoundException e)
         {
             System.out.println("No file found: No login details loaded");
@@ -48,12 +54,16 @@ public class Driver
 
     public static void main(String[] args)
     {
-        System.out.println("Welcome to RMIT HR System");
-        System.out.println("Please enter your Username: ");
-        String inputUser = input.nextLine();
-        System.out.println("Please enter your Password: ");
-        String inputPass = input.nextLine();
+        System.out.println("Welcome to RMIT HR System\n");
+        do
+        {
+            System.out.println("Username: ");
+            String inputUser = input.nextLine();
+            System.out.println("Password: ");
+            String inputPass = input.nextLine();
+            login(inputUser, inputPass);
+        }
+        while(loggedIn == false);
 
-        login(inputUser, inputPass);
     }
 }
