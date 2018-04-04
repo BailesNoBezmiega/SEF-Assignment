@@ -8,7 +8,7 @@ public class CasualStaff extends Staff
     public CasualStaff(String username)
     {
         this.inputFile = new File("CasualStaff.txt");
-        readFile(username);
+        loadUserInformation(username);
         this.userName = readUser;
         this.ID = readID;
         this.name = readName;

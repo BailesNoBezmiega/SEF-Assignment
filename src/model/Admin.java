@@ -11,7 +11,7 @@ public class Admin extends Staff
     public Admin(String username)
     {
         this.inputFile = new File("Admin.txt");
-        readFile(username);
+        loadUserInformation(username);
         this.userName = readUser;
         this.ID = readID;
         this.name = readName;

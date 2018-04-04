@@ -7,7 +7,7 @@ public class Approval extends Staff
     public Approval(String username)
     {
         this.inputFile = new File("Approval.txt");
-        readFile(username);
+        loadUserInformation(username);
         this.userName = readUser;
         this.ID = readID;
         this.name = readName;

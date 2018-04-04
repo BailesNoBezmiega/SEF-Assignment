@@ -7,7 +7,7 @@ public class CourseCoordinator extends Staff
     public CourseCoordinator(String username)
     {
         this.inputFile = new File("CourseCoordinator.txt");
-        readFile(username);
+        loadUserInformation(username);
         this.userName = readUser;
         this.ID = readID;
         this.name = readName;

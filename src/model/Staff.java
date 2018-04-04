@@ -28,7 +28,7 @@ public abstract class Staff
         the constructor will call this function so that the corresponding user's details (name,address etc)
         will be set when the object is created
      */
-    void readFile(String username)
+    void loadUserInformation(String username)
     {
         try
         {
