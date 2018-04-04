@@ -1,19 +1,15 @@
 package model;
 
-import java.util.*;
-import java.io.*;
-
 public abstract class Staff
 // This will be the abstract class that all of the actors will extend from
 {
-    private String name;
-    private String userName;
-    private String password;
-    private String emailAddress;
-    private String phoneNumber;
-    private String ID;
+    protected String name;
+    protected String userName;
+    protected String emailAddress;
+    protected String phoneNumber;
+    protected String ID;
 
-
+    abstract void menu();
 
 
     public void setName(String name)
@@ -24,26 +20,6 @@ public abstract class Staff
     public String getName()
     {
         return this.name;
-    }
-
-    public void setUserName(String uName)
-    {
-        this.userName = uName;
-    }
-
-    public String getUserName()
-    {
-        return this.userName;
-    }
-
-    public void setPassword(String pWord)
-    {
-        this.password = pWord;
-    }
-
-    public String getPassword()
-    {
-        return this.password;
     }
 
     public void setEmailAddress(String email)
