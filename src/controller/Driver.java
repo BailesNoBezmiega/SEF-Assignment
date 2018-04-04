@@ -1,5 +1,7 @@
 package controller;
 
+import model.Admin;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -31,7 +33,7 @@ public class Driver
                 {
                     System.out.println("You have successfully logged in as " + user + ", access level: " + loginComponents[2]);
                     loggedIn = true;
-                    break;
+
                     /*
                     if loginComponents[2] == "admin"
                         call adminMenu()
@@ -39,6 +41,11 @@ public class Driver
                         call CourseCoordinatorMenu()
                     ETC
                      */
+                    if(loginComponents[2].compareTo("Admin") == 0)
+                    {
+                        Admin a = new Admin(loginComponents[0]);
+                        a.menu();
+                    }
                 }
 
             }
@@ -64,6 +71,7 @@ public class Driver
             login(inputUser, inputPass);
         }
         while(loggedIn == false);
+
 
     }
 }
