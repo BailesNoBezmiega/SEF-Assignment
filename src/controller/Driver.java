@@ -8,48 +8,60 @@ import java.util.*;
 
 public class Driver
 {
-    static Scanner input = new Scanner(System.in);
-    static boolean loggedIn = false;
+    private static Scanner input = new Scanner(System.in);
+    private static boolean loggedIn = false;
 
+    // This function is used to login to the system
     private static void login(String user, String pass)
     {
+        // Function will read loginDetails.txt and look for matching user and password
         File fileName = new File("loginDetails.txt");
-        Scanner inputStream = null;
+        Scanner inputStream;
 
         try
         {
             inputStream = new Scanner(fileName);
             while(inputStream.hasNextLine())
             {
-                // Convert the line read by scanner into an array that holds two strings
+                /*  Read the text file line by line and for each line, split the string at every ':' character
+                    so that the line is split into an array of three different strings.
+                    loginComponents[0] = Username
+                    loginComponents[1] = Password
+                    loginComponents[2] = Account type
+                */
                 String nextLine = inputStream.nextLine();
-                /* loginComponents[0] = Username
-                   loginComponents[1] = Password
-                   loginComponents[2] = Access Level
-                 */
                 String[] loginComponents = nextLine.split(":");
 
+                // If the input username and password matches any of the accounts in the txt file
                 if(user.compareTo(loginComponents[0]) == 0 && pass.compareTo(loginComponents[1]) == 0)
                 {
-                    System.out.println("You have successfully logged in as " + user + ", access level: " + loginComponents[2]);
-                    loggedIn = true;
+                    System.out.println("You have successfully logged in as "
+                            + user + ", account type: " + loginComponents[2]);
 
-                    /*
-                    if loginComponents[2] == "admin"
-                        call adminMenu()
-                    else if loginComponents[2] = "model.CourseCoordinator"
-                        call CourseCoordinatorMenu()
-                    ETC
+                    loggedIn = true;    // Boolean that changes to true after successful login
+
+                    /*  Check the type of account that the user logged into, switch that activates based
+                        on the account type
                      */
-                    if(loginComponents[2].compareTo("Admin") == 0)
+                    switch(loginComponents[2])
                     {
-                        Admin a = new Admin(loginComponents[0]);
-                        a.menu();
+                        case "Admin":
+                            Admin a = new Admin(loginComponents[0]);
+                            a.menu();
+                            break;
+                        case "Course Coordinator":
+                            // TO DO
+                            break;
+                        case "Approval":
+                            // TO DO
+                            break;
+                        case "Casual Staff":
+                            // TO DO
+                            break;
                     }
                 }
-
             }
-            if(loggedIn == false)
+            if(!loggedIn)
             {
                 System.out.println("Error: invalid username/password combination.");
             }
@@ -62,6 +74,7 @@ public class Driver
     public static void main(String[] args)
     {
         System.out.println("Welcome to RMIT HR System\n");
+        // Keep asking user for username/password until they are able to log into an existing account
         do
         {
             System.out.println("Username: ");
@@ -70,7 +83,7 @@ public class Driver
             String inputPass = input.nextLine();
             login(inputUser, inputPass);
         }
-        while(loggedIn == false);
+        while(!loggedIn);
 
 
     }
