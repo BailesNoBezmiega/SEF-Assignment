@@ -1,6 +1,9 @@
 package controller;
 
 import model.Admin;
+import model.Approval;
+import model.CasualStaff;
+import model.CourseCoordinator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -50,13 +53,17 @@ public class Driver
                             a.menu();
                             break;
                         case "Course Coordinator":
-                            // TO DO
+                            CourseCoordinator c = new CourseCoordinator(loginComponents[0]);
+                            c.menu();
                             break;
                         case "Approval":
-                            // TO DO
+                            Approval ap = new Approval(loginComponents[0]);
+                            ap.menu();
                             break;
                         case "Casual Staff":
                             // TO DO
+                            CasualStaff cs = new CasualStaff(loginComponents[0]);
+                            cs.menu();
                             break;
                     }
                 }
