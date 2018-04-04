@@ -4,12 +4,6 @@ import java.util.*;
 
 public class Admin extends Staff
 {
-
-
-    /*  Temporary variables which will be used to instantiate
-        object after reading in from Admin.txt file */
-
-
     // Scanner used to ask for user input after opening admin.menu()
     private Scanner userInput = new Scanner(System.in);
 
@@ -23,10 +17,7 @@ public class Admin extends Staff
         this.name = readName;
         this.phoneNumber = readPhoneNo;
         this.emailAddress = readEmail;
-
     }
-
-
 
     // Function used to create new user by writing to the existing loginDetails.txt file
     private void addStaffMember(String newUser, String newPassword, String newAccountType)
