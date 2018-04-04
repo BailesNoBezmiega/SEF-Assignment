@@ -17,7 +17,8 @@ public class Admin extends Staff
     private Scanner userInput = new Scanner(System.in);
 
     // Class constructor
-    public Admin(String username) {
+    public Admin(String username)
+    {
         readFile(username);
         this.userName = readUser;
         this.ID = readID;
@@ -37,14 +38,24 @@ public class Admin extends Staff
             {
                 String nextLine = readInput.nextLine();
                 String[] inputComponents = nextLine.split(":");
-                // If the next line read in is NOT a blank line
-                if (inputComponents[0].compareTo("Username") == 0 && inputComponents[1].compareTo(username) == 0)
+                if(inputComponents[0].equals("Username") && inputComponents[1].compareTo(username) != 0)
                 {
-                    readUser = inputComponents[1];
-                    switch (inputComponents[0])
+                    do
                     {
+                        nextLine = readInput.nextLine();
+                    }
+                    while(nextLine.compareTo("") != 0);
+                }
+                else
+                {
+                    switch(inputComponents[0])
+                    {
+                        case "Username":
+                            readUser = inputComponents[1];
+                            break;
                         case "ID":
                             readID = inputComponents[1];
+                            break;
                         case "Name":
                             readName = inputComponents[1];
                             break;
@@ -53,7 +64,7 @@ public class Admin extends Staff
                             break;
                         case "Email Address":
                             readEmail = inputComponents[1];
-                            break;
+                            return;
                     }
                 }
             }
@@ -62,7 +73,6 @@ public class Admin extends Staff
         {
             e.printStackTrace();
         }
-
     }
 
     // Function used to create new user by writing to the existing loginDetails.txt file
