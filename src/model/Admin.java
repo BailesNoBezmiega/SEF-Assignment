@@ -4,14 +4,11 @@ import java.util.*;
 
 public class Admin extends Staff
 {
-    private File inputFile = new File("admin.txt");
+
+
     /*  Temporary variables which will be used to instantiate
-        object after reading in from admin.txt file */
-    private String readUser = "";
-    private String readID = "";
-    private String readName = "";
-    private String readPhoneNo = "";
-    private String readEmail = "";
+        object after reading in from Admin.txt file */
+
 
     // Scanner used to ask for user input after opening admin.menu()
     private Scanner userInput = new Scanner(System.in);
@@ -19,61 +16,17 @@ public class Admin extends Staff
     // Class constructor
     public Admin(String username)
     {
+        this.inputFile = new File("Admin.txt");
         readFile(username);
         this.userName = readUser;
         this.ID = readID;
         this.name = readName;
         this.phoneNumber = readPhoneNo;
         this.emailAddress = readEmail;
+
     }
 
-    // Reads admin.txt file and then retrieves information such as name, email address and etc
-    private void readFile(String username)
-    {
-        Scanner readInput;
-        try
-        {
-            readInput = new Scanner(inputFile);
-            while(readInput.hasNextLine())
-            {
-                String nextLine = readInput.nextLine();
-                String[] inputComponents = nextLine.split(":");
-                if(inputComponents[0].equals("Username") && inputComponents[1].compareTo(username) != 0)
-                {
-                    do
-                    {
-                        nextLine = readInput.nextLine();
-                    }
-                    while(nextLine.compareTo("") != 0);
-                }
-                else
-                {
-                    switch(inputComponents[0])
-                    {
-                        case "Username":
-                            readUser = inputComponents[1];
-                            break;
-                        case "ID":
-                            readID = inputComponents[1];
-                            break;
-                        case "Name":
-                            readName = inputComponents[1];
-                            break;
-                        case "Phone number":
-                            readPhoneNo = inputComponents[1];
-                            break;
-                        case "Email Address":
-                            readEmail = inputComponents[1];
-                            return;
-                    }
-                }
-            }
-        }
-        catch(IOException e)
-        {
-            e.printStackTrace();
-        }
-    }
+
 
     // Function used to create new user by writing to the existing loginDetails.txt file
     private void addStaffMember(String newUser, String newPassword, String newAccountType)
