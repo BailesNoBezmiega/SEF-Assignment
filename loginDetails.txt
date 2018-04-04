@@ -2,6 +2,7 @@
 UserName:Password:AccessLevel
 
 Jason1195:admin123:Admin
+admin:password:Admin
 mightymouse42:helloworld:Course Coordinator
 gatekeeper94:yesorno:Approval
 Jswagger:Sniper:Casual Staff
