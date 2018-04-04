@@ -77,7 +77,6 @@ public class Admin extends Staff
             writer.write(newPassword);
             writer.write(":");
             writer.write(newAccountType);
-            writer.write("\n");
 
             writer.flush();
             writer.close();
