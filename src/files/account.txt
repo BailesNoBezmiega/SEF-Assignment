@@ -1,0 +1,7 @@
+1:a1:123:Administrator:admin@rmit.edu.au:0000-000-000:Admin:1
+2:t1:password:Sam:t1111@rmit.edu.au:1234-000-000:CourseCoordinator:0
+3:s3686810:password:David Doan:s3686810@rmit.edu.au:5678-000-000:CasualStaff:1
+4:s3599768:password:Jeffrey Geng Ze Lee:s3599768@rmit.edu.au:9101-000-000:CasualStaff:1
+5:s3674848:password:Vladyslav Iano:s3674848@rmit.edu.au:2345-000-000:CasualStaff:1
+6:s3690104:password:Leo Gu:s3690104@rmit.edu.au:6789-000-000:CasualStaff:1
+7:t2222:password:Peter:t2222@rmit.edu.au:0123-000-000:Approval:1

@@ -1,83 +1,95 @@
 package model;
 
-import java.io.*;
-import java.util.Scanner;
+public class Staff {
+	String id;
+	String userName;
+	String password;
+	String name;
+	String emailAddress;
+	String phoneNumber;
+	String role;
+	String status;
 
-public abstract class Staff
-// This will be the abstract class that all of the actors will extend from
-{
-    String name;
-    String userName;
-    String emailAddress;
-    String phoneNumber;
-    String ID;
+	public Staff() {
+	}
 
-    abstract void menu();
-    //abstract void printDetails();
+	public Staff(String id, String userName, String password, String name, String emailAddress, String phoneNumber,
+			String role, String status) {
+		this.id = id;
+		this.userName = userName;
+		this.password = password;
+		this.name = name;
+		this.emailAddress = emailAddress;
+		this.phoneNumber = phoneNumber;
+		this.role = role;
+		this.status = status;
+	}
 
-    //  The following variables are just temporary variables which the function readFile will use
-    private Scanner readInput;
-    String readUser = "";
-    String readID = "";
-    String readName = "";
-    String readPhoneNo = "";
-    String readEmail = "";
-    File inputFile;
-    /*  This function will read either Admin.txt, Approval.text, CourseCoordinator.txt or CasualStaff.txt,
-        then it will search for the corresponding username in those text files and then
-        the constructor will call this function so that the corresponding user's details (name,address etc)
-        will be set when the object is created
-     */
-    void loadUserInformation(String username)
-    {
-        try
-        {
-            // Loop that will read over the text file line by line
-            readInput = new Scanner(inputFile);
-            while(readInput.hasNextLine())
-            {
-                // Split line at each ':' character
-                String nextLine = readInput.nextLine();
-                String[] inputComponents = nextLine.split(":");
-                /*  If the current line that is being read is a different username to the one passed as an
-                    argument in this function, skip over the text file until a blank line is reached
-                 */
-                if(inputComponents[0].equals("Username") && inputComponents[1].compareTo(username) != 0)
-                {
-                    do
-                    {
-                        nextLine = readInput.nextLine();
-                    }
-                    while(nextLine.compareTo("") != 0);
-                }
-                else    // If the username passed as an argument in the function matches one in the text file
-                {
-                    switch(inputComponents[0])
-                    {
-                        case "Username":
-                            readUser = inputComponents[1];
-                            break;
-                        case "ID":
-                            readID = inputComponents[1];
-                            break;
-                        case "Name":
-                            readName = inputComponents[1];
-                            break;
-                        case "Phone number":
-                            readPhoneNo = inputComponents[1];
-                            break;
-                        case "Email Address":
-                            readEmail = inputComponents[1];
-                            return;
-                    }
-                }
-            }
-        }
-        catch(IOException e)
-        {
-            e.printStackTrace();
-        }
-    }
+	public String getId() {
+		return id;
+	}
 
+	public void setId(String id) {
+		this.id = id;
+	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String toString() {
+		return this.id+"\t"+this.userName+"\t"+this.password+"\t"+this.name+"\t"+this.emailAddress+"\t"+this.phoneNumber+"\t"+this.role+"\t"+(this.status.equals("1")?"activated":"Need to be activated");
+	}
 }

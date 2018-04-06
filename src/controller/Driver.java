@@ -1,97 +1,156 @@
 package controller;
 
-import model.Admin;
-import model.Approval;
-import model.CasualStaff;
-import model.CourseCoordinator;
-
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
-public class Driver
-{
-    private static Scanner input = new Scanner(System.in);
-    private static boolean loggedIn = false;
+import model.Staff;
+import view.Menu;
 
-    // This function is used to login to the system
-    private static void login(String user, String pass)
-    {
-        // Function will read loginDetails.txt and look for matching user and password
-        File fileName = new File("loginDetails.txt");
-        Scanner inputStream;
+public class Driver {
+	private static String ACCOUNT_FILE = "src/files/account.txt";
+	public static Map<String, Staff> userMap = null;
+	private static int countUser=0;
 
-        try
-        {
-            inputStream = new Scanner(fileName);
-            while(inputStream.hasNextLine())
-            {
-                /*  Read the text file line by line and for each line, split the string at every ':' character
-                    so that the line is split into an array of three different strings.
-                    loginComponents[0] = Username
-                    loginComponents[1] = Password
-                    loginComponents[2] = Account type
-                */
-                String nextLine = inputStream.nextLine();
-                String[] loginComponents = nextLine.split(":");
+	private static boolean IS_VALIDATE = false;
+	private static Scanner LOGIN_INPUT = new Scanner(System.in);
+	private static Scanner FILE_STREAM = null;
 
-                // If the input username and password matches any of the accounts in the txt file
-                if(user.compareTo(loginComponents[0]) == 0 && pass.compareTo(loginComponents[1]) == 0)
-                {
-                    System.out.println("You have successfully logged in as "
-                            + user + ", account type: " + loginComponents[2]);
+	public static Map<String, Staff> initialStaffDetails2Map() {
+		userMap = new HashMap<String, Staff>();
+		try {
+			Scanner fileStream = new Scanner(new File(ACCOUNT_FILE), "UTF-8");
 
-                    loggedIn = true;    // Boolean that changes to true after successful login
+			while (fileStream.hasNextLine()) {
+				Staff staff = new Staff();
+				String[] accountComponents = fileStream.nextLine().split(":");
+				staff.setId(accountComponents[0]);
+				staff.setUserName(accountComponents[1]);
+				staff.setPassword(accountComponents[2]);
+				staff.setName(accountComponents[3]);
+				staff.setEmailAddress(accountComponents[4]);
+				staff.setPhoneNumber(accountComponents[5]);
+				staff.setRole(accountComponents[6]);
+				staff.setStatus(accountComponents[7]);
+				if (userMap.containsKey(staff.getUserName()) == false) {
+					userMap.put(staff.getUserName(), staff);
+					countUser++;
+				}
+			}
+			System.out.println("Count User: "+countUser);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			return userMap;
+		}
+	}
 
-                    /*  Check the type of account that the user logged into, switch that activates based
-                        on the account type
-                     */
-                    switch(loginComponents[2])
-                    {
-                        case "Admin":
-                            Admin a = new Admin(loginComponents[0]);
-                            a.menu();
-                            break;
-                        case "Course Coordinator":
-                            CourseCoordinator c = new CourseCoordinator(loginComponents[0]);
-                            c.menu();
-                            break;
-                        case "Approval":
-                            Approval ap = new Approval(loginComponents[0]);
-                            ap.menu();
-                            break;
-                        case "Casual Staff":
-                            // TO DO
-                            CasualStaff cs = new CasualStaff(loginComponents[0]);
-                            cs.menu();
-                            break;
-                    }
-                }
-            }
-            if(!loggedIn)
-            {
-                System.out.println("Error: invalid username/password combination.");
-            }
-        } catch (FileNotFoundException e)
-        {
-            System.out.println("No file found: No login details loaded");
-        }
-    }
+	public static boolean validUser(String userName, String password) {
+		if (userName != null && !userName.equals("")) {
+			if (userMap.containsKey(userName) == true) {
+				Staff staff = userMap.get(userName);
+				if (staff.getPassword().equals(password) && password != null)
+					IS_VALIDATE = true;
+			}
+		}
+		return IS_VALIDATE;
+	}
 
-    public static void main(String[] args)
-    {
-        System.out.println("Welcome to RMIT HR System\n");
-        // Keep asking user for username/password until they are able to log into an existing account
-        do
-        {
-            System.out.println("Username: ");
-            String inputUser = input.nextLine();
-            System.out.println("Password: ");
-            String inputPass = input.nextLine();
-            login(inputUser, inputPass);
-        }
-        while(!loggedIn);
+	private static void login(String userName, String password) {
+		boolean loginResult = validUser(userName, password);
+		if (loginResult == true) {
+			System.out.println("You have successfully logged in as " + userName);
+			Menu.displayMainMenuByRole(userMap.get(userName).getRole());
 
+			int option = LOGIN_INPUT.nextInt();
+			LOGIN_INPUT.nextLine();
+			if (option > 0 && option <= 3) {
+				if (option == 3) { // logout
 
-    }
+				} else {
+					Menu.displaySubMenuByRole(userMap.get(userName).getRole(), 1, option);
+				}
+
+			}
+
+		} else {
+			System.out.println("Error: invalid username/password combination.");
+		}
+	}
+
+	public static void addUser(String userName, String password, String name, String emailAddress, String phoneNumber,
+			String userRole, String status) {
+		FileWriter writer;
+		try {
+			writer = new FileWriter(ACCOUNT_FILE, true);
+			writer.write("\n");
+			countUser=countUser+1;
+			writer.write(String.valueOf(countUser));
+			writer.write(":");
+			writer.write(userName);
+			writer.write(":");
+			writer.write(password);
+			writer.write(":");
+			writer.write(name);
+			writer.write(":");
+			writer.write(emailAddress);
+			writer.write(":");
+			writer.write(phoneNumber);
+			writer.write(":");
+			writer.write(userRole);
+			writer.write(":");
+			writer.write(status);
+	
+			writer.flush();
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void addUser(Staff staff) {
+		FileWriter writer;
+		try {
+			writer = new FileWriter(ACCOUNT_FILE, true);
+			writer.write("\n");
+			writer.write(countUser++);
+			writer.write(":");
+			writer.write(staff.getUserName());
+			writer.write(":");
+			writer.write(staff.getPassword());
+			writer.write(":");
+			writer.write(staff.getName());
+			writer.write(":");
+			writer.write(staff.getEmailAddress());
+			writer.write(":");
+			writer.write(staff.getPhoneNumber());
+			writer.write(":");
+			writer.write(staff.getRole());
+			writer.write(":");
+			writer.write(staff.getStatus());
+	
+			writer.flush();
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void main(String[] args) {
+		userMap = Driver.initialStaffDetails2Map();
+		System.out.println("Welcome to RMIT HR System\n");
+		do {
+			System.out.println("Username: ");
+			String inputUserName = LOGIN_INPUT.nextLine();
+			System.out.println("Password: ");
+			String inputPassword = LOGIN_INPUT.nextLine();
+			login(inputUserName, inputPassword);
+
+		} while (!IS_VALIDATE);
+
+	}
 }
