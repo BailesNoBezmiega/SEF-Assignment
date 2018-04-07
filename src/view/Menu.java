@@ -1,8 +1,7 @@
 package view;
 
-import java.util.Iterator;
+import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
 import controller.Driver;
 import model.Staff;
@@ -16,18 +15,28 @@ public class Menu {
 
 	public static void displayMainMenuByRole(String userRole) {
 		if (userRole.equals("CasualStaff")) {
-			System.out.println("1)\tViewassigned activities");
-			System.out.println("2)\tSee offer and application");
+			System.out.println("1)\tViewassigned activities  (currently unavailable)");
+			System.out.println("2)\tSee offer and application  (currently unavailable)");
 		} else if (userRole.equals("Approval")) {
-			System.out.println("1)\tView assignment requests");
+			System.out.println("1)\tView assignment requests  (currently unavailable)");
 		} else if (userRole.equals("CourseCoordinator")) {
-			System.out.println("1)\tView assigned courses");
-			System.out.println("2)\tRequest onboarding for new casual staff member then notify admin");
+			System.out.println("1)\tView assigned courses  (currently unavailable)");
+			System.out.println(
+					"2)\tRequest onboarding for new casual staff member then notify admin  (currently unavailable)");
 		} else if (userRole.equals("Admin")) {
 			System.out.println("1)\tMaintain and update casual staff list");
-			System.out.println("2)\tManage payroll");
+			System.out.println("2)\tManage payroll  (currently unavailable)");
 		}
 		System.out.println("3)\tLogout");
+		int option = LOGIN_INPUT.nextInt();
+		LOGIN_INPUT.nextLine();
+		if (option > 0 && option <= 3) {
+			if (option == 3) {
+
+			} else {
+				displaySubMenuByRole(userRole, 1, option);
+			}
+		}
 	}
 
 	public static void displaySubMenuByRole(String userRole, int level, int option) {
@@ -51,32 +60,28 @@ public class Menu {
 	public static void displaySubMenuByAdmin(int level, int option) {
 		if (level == 1) {
 			if (option == 1) {
-				System.out.println("Maintain and update casual staff list: ");
-				System.out.println("1)\tAdd new staff member");
-				System.out.println("2)\tRemove existing staff member (currently unavailable)");
-				System.out.println("3)\tView staff member database (currently unavailable)");
-				System.out.println("4)\tback to main menu (currently unavailable)");
-				System.out.println("Enter option 1, 2, 3 or 4: ");
+				subMenuByAdmin();
 
 				int newOption = LOGIN_INPUT.nextInt();
 				LOGIN_INPUT.nextLine();
 				if (newOption >= 1 && newOption <= 4) {
 					if (newOption == 4) {
-						displayMainMenuByRole(ADMIN);
+						Menu.displayMainMenuByRole(ADMIN);
 					} else {
 						displaySubMenuByRole(ADMIN, 2, newOption);
 					}
 				} else {
-					System.out.println("Input number is wrong");
+					System.out.println("Wrong number, input again: ");
+					displaySubMenuByAdmin(level, option);
 				}
 			} else if (option == 2) {
-				System.out.println("Manage payroll: ");
+				System.out.println("Manage payroll:  (currently unavailable) ");
 				System.out.println("Need to do..........");
 				// TODO
 			}
 		} else if (level == 2) {
 			if (option == 1) {
-				System.out.println("Add new staff member: ");
+				System.out.println("Add new staff member======================");
 
 				System.out.println("Enter new staff username: ");
 				String userName = LOGIN_INPUT.nextLine();
@@ -102,20 +107,22 @@ public class Menu {
 
 				String status = "1";
 				Driver.addUser(userName, password, name, emailAddress, phoneNumber, userRole, status);
-
 			} else if (option == 2) {
-				System.out.println("Remove existing staff member: ");
-				System.out.println("Need to do..........");
-				// TODO
+				System.out.println("Remove existing staff member======================");
+				Driver.displayAllUsers();
+				System.out.print("Enter userName that you want to delete: ");
+				String delUserName = LOGIN_INPUT.nextLine();
+				if (delUserName != null && !delUserName.equals("")) {
+					Map<String, Staff> userMap = Driver.userMap;
+					if (userMap.containsKey(delUserName) == true) {
+						userMap.remove(delUserName);
+						System.out.println("User has been deleted.");
+					}
+				}
+				Driver.displayAllUsers();
 			} else if (option == 3) {
 				System.out.println("View staff member database: ");
-				Set<String> keys = Driver.userMap.keySet();
-				Iterator<String> it = keys.iterator();
-				while (it.hasNext()) {
-					String key = it.next();
-					Staff value = Driver.userMap.get(key);
-					System.out.println(value);
-				}
+				Driver.displayAllUsers();
 			} else if (option == 4) {
 				System.out.println("back to main menu: ");
 				System.out.println("Need to do..........");
@@ -123,6 +130,15 @@ public class Menu {
 			}
 
 		}
+	}
+
+	private static void subMenuByAdmin() {
+		System.out.println("Maintain and update casual staff list======================");
+		System.out.println("1)\tAdd new staff member");
+		System.out.println("2)\tRemove existing staff member");
+		System.out.println("3)\tView staff member database");
+		System.out.println("4)\tback to main menu");
+		System.out.println("Enter option 1, 2, 3 or 4: ");
 	}
 
 	public static void displaySubMenuByCoordinator(int level, int option) {

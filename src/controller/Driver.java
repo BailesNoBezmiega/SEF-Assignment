@@ -5,8 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 import model.Staff;
 import view.Menu;
@@ -14,7 +16,7 @@ import view.Menu;
 public class Driver {
 	private static String ACCOUNT_FILE = "src/files/account.txt";
 	public static Map<String, Staff> userMap = null;
-	private static int countUser=0;
+	private static int countUser = 0;
 
 	private static boolean IS_VALIDATE = false;
 	private static Scanner LOGIN_INPUT = new Scanner(System.in);
@@ -41,7 +43,7 @@ public class Driver {
 					countUser++;
 				}
 			}
-			System.out.println("Count User: "+countUser);
+			System.out.println("Count User: " + countUser);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} finally {
@@ -66,17 +68,6 @@ public class Driver {
 			System.out.println("You have successfully logged in as " + userName);
 			Menu.displayMainMenuByRole(userMap.get(userName).getRole());
 
-			int option = LOGIN_INPUT.nextInt();
-			LOGIN_INPUT.nextLine();
-			if (option > 0 && option <= 3) {
-				if (option == 3) { // logout
-
-				} else {
-					Menu.displaySubMenuByRole(userMap.get(userName).getRole(), 1, option);
-				}
-
-			}
-
 		} else {
 			System.out.println("Error: invalid username/password combination.");
 		}
@@ -88,7 +79,7 @@ public class Driver {
 		try {
 			writer = new FileWriter(ACCOUNT_FILE, true);
 			writer.write("\n");
-			countUser=countUser+1;
+			countUser = countUser + 1;
 			writer.write(String.valueOf(countUser));
 			writer.write(":");
 			writer.write(userName);
@@ -104,14 +95,14 @@ public class Driver {
 			writer.write(userRole);
 			writer.write(":");
 			writer.write(status);
-	
+
 			writer.flush();
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void addUser(Staff staff) {
 		FileWriter writer;
 		try {
@@ -132,11 +123,21 @@ public class Driver {
 			writer.write(staff.getRole());
 			writer.write(":");
 			writer.write(staff.getStatus());
-	
+
 			writer.flush();
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	public static void displayAllUsers() {
+		Set<String> keys = Driver.userMap.keySet();
+		Iterator<String> it = keys.iterator();
+		while (it.hasNext()) {
+			String key = it.next();
+			Staff value = Driver.userMap.get(key);
+			System.out.println(value);
 		}
 	}
 
